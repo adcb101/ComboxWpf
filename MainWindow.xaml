@@ -1,0 +1,61 @@
+﻿<Window x:Class="WpfApp3.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp3"
+        xmlns:core="clr-namespace:System;assembly=mscorlib"
+         xmlns:controls="clr-namespace:HandyControl.Controls;assembly=HandyControl"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="1080" Width="1920">
+    <Window.Resources>
+        <ObjectDataProvider x:Key="SexEnumKey" MethodName="GetValues" ObjectType="{x:Type core:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type Type="local:SexEnum"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+    </Window.Resources>
+    
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <DataGrid Grid.Row="1" Grid.ColumnSpan="2" Name="DG1"  ItemsSource="{Binding}" CanUserAddRows="False" Height="1000" AutoGenerateColumns="False">
+
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Header1" Binding="{Binding name}" />
+                    <DataGridTemplateColumn Width="150" Header="性别">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                              
+                                <ComboBox  x:Name="combobox2"  SelectedItem="{Binding sex, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" ItemsSource="{Binding Source={StaticResource SexEnumKey}}" />
+                              
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    
+                    <!--<DataGridComboBoxColumn Header="性别"  SelectedItemBinding="{Binding sex}" ItemsSource="{Binding Source={StaticResource SexEnumKey}}" />-->
+                </DataGrid.Columns>
+            </DataGrid>
+        <StackPanel Grid.Row="0" Margin="10,10,10,10" HorizontalAlignment="Left" VerticalAlignment="Center" Orientation="Horizontal">
+           
+            <Button Click="Button_Click"  Margin="10,10,10,10">
+                加入
+            </Button>
+            <ComboBox  x:Name="combobox1" Width="100">
+                <ComboBoxItem IsSelected="True">男</ComboBoxItem>
+                <ComboBoxItem >女</ComboBoxItem>
+            </ComboBox>
+           
+            <!--<ComboBox x:Name="combobox1"  Margin="10,10,10,10" Width="100"  SelectionChanged="combobox1_SelectionChanged" SelectedItem="{Binding sex}" ItemsSource="{Binding Source={StaticResource SexEnumKey}}"/>-->
+        </StackPanel>
+        </Grid>
+  
+    
+</Window>
